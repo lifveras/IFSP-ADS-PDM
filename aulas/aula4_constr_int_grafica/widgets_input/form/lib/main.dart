@@ -62,7 +62,10 @@ class _MyAppState extends State<MyApp> {
                       SizedBox(
                         width: 300,
                         child: TextFormField(
-                          onSaved: (newValue) => _nome = newValue!,
+                          onSaved: (newValue) => 
+                            setState(() {
+                              _nome = newValue!;
+                            }),
                           decoration: const InputDecoration(
                             hintText: "Entre com seu nome",
                           ),
