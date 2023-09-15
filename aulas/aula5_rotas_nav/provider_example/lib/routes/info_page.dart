@@ -7,6 +7,7 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Consumer<TodoCache>(
           builder: (context, cache, _) {

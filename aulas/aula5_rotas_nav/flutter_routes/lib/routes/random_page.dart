@@ -8,7 +8,13 @@ class RandomPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Text("${Random().nextInt(20)}"),
+        child: Text(
+          "${Random().nextInt(20)}",
+          style: TextStyle(
+            fontSize: 48,
+            color: Colors.blue,
+          ),
+        ),
       ),
     );
   }

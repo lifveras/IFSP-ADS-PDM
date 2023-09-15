@@ -14,7 +14,9 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<TodoCache>(
+    return ChangeNotifierProvider(
+      // documentação para o Provider
+      //    https://pub.dev/packages/provider
       create: (_) => TodoCache(),
       // child: const TodosPage(),
       child: MaterialApp(

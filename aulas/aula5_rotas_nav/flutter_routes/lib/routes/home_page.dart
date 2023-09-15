@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Adicionado agora
+            // Quando o botão é clicado, a página RandomPage será carregada
             Navigator.of(context).pushNamed(RouteGenerator.randomPage);
           },
           child: const Text("Random"),

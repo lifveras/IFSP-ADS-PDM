@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_example/routes.dart';
@@ -10,12 +12,20 @@ class TodosPage extends StatelessWidget {
   void _open(BuildContext context) =>
       Navigator.of(context).pushNamed(RouteGenerator.infoPage);
 
+  // static const _chars =
+  //     'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  // static final Random _rnd = Random();
+
+  // String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+  //     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<TodoCache>(
         builder: (context, cache, _) {
           return ListView.builder(
+            // key: new Key(getRandomString(5)),
             itemCount: cache.list.length,
             itemBuilder: (context, index) {
               return ListTile(
@@ -28,6 +38,12 @@ class TodosPage extends StatelessWidget {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(RouteGenerator.formPage);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
