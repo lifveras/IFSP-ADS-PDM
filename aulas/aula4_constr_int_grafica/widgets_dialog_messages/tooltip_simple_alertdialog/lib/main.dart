@@ -55,12 +55,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _openSimpleDialog() async {
+    // Valor recebe o segundo parâmetro de Navigator.pop()
     var valor = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
           title: const Text('Título do SimpleDialog'),
           children: [
+            // Define uma opção do SimpleDialog
             SimpleDialogOption(
               // EventHandler para quando esta opção for selecionada
               onPressed: () {

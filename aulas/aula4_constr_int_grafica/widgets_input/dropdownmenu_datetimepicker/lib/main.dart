@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List _listaDeItens = [];
   String _dropdownValue = "Item 1"; // Item inicialmente selecionado
-  DateTime dataSelecionada = DateTime.now();
+  DateTime _dataSelecionada = DateTime.now();
   TimeOfDay _horaSelecionada = TimeOfDay.now(); // Hora inicial do DatePicker
 
   @override
@@ -39,15 +39,16 @@ class _MyAppState extends State<MyApp> {
     // Mostra o DatePicker e espera por uma data selecionada
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: dataSelecionada,
+      initialDate: _dataSelecionada,
       firstDate: DateTime(2023, 8),
       lastDate: DateTime(2101),
     );
 
     // Se uma data for selecionada, atualiza o estado
-    if (picked != null && picked != dataSelecionada) {
+    if (picked != null && picked != _dataSelecionada) {
       setState(() {
-        dataSelecionada = picked;
+        _dataSelecionada = picked;
+        print(_dataSelecionada);
       });
     }
   }
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
     if (picked != null && picked != _horaSelecionada) {
       setState(() {
         _horaSelecionada = picked;
+        print('${_horaSelecionada.hour}:${_horaSelecionada.minute}');
       });
     }
   }

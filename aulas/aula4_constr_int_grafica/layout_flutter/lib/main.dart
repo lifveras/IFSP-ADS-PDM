@@ -49,10 +49,16 @@ class MyApp extends StatelessWidget {
         child: ButtonBar(
           alignment: MainAxisAlignment.center,
           children: [
+            // FlatButton
+            FilledButton(
+              onPressed: () {}, 
+              child: const Text("OK"),
+            ),
             TextButton(
               onPressed: () {},
               child: const Text("No"),
             ),
+            // RaisedButton
             ElevatedButton(
               onPressed: () {
                 showDialog(

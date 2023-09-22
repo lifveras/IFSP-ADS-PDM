@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           Slider(
-            max: 100, // Valor máximo do slider
+            max: 500, // Valor máximo do slider
             label: "valor: " + _sliderState.round().toString(), //texto indicando o valor do slider
             divisions: 10, // Número de pontos em que o Slider será quabrado
             value: _sliderState, // é um double
