@@ -14,12 +14,16 @@ class RequestItem implements HTTPRequest<Item> {
   @override
   Future<Item> execute() async {
     // http://domain/path/1
-    final uri = Uri.parse(url);
+    // Cria um objeto URI parsing uma URL String
+    final uri = Uri.parse(url); 
+    // A lib http faz as requisições em cima da URI
     final response = await http.get(uri);
 
     if (response.statusCode != 200) {
       throw http.ClientException("Erro HTTP no cliente!");
     }
+    // Um pequeno atraso gerado propositalmente,
+    // para que o Widget CircularProgressIndicator não suma rapidamente.
     await Future.delayed(Duration(seconds: 5));
     return _parseJson(response.body);
   }

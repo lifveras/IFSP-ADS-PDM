@@ -4,7 +4,7 @@ String createOrderMessage() {
 }
 
 Future<String> fetchUserOrder() =>
-    // Imagine que ésta é uma função
+    // Imagine que esta é uma função
     // lenta e complexa.
     Future.delayed(
       const Duration(seconds: 2),

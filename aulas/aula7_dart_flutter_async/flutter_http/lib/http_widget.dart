@@ -40,6 +40,7 @@ class _HTTPWidgetState extends State<HTTPWidget> {
           );
         }
 
+        // Retornado enquanto o Future não é resolvido
         return const Center(
           child: CircularProgressIndicator(),
         );
