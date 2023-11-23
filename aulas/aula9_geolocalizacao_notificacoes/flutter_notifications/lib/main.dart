@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MaterialApp(
     home: NotificationGenerator(),
   ));
@@ -16,21 +18,34 @@ class NotificationGenerator extends StatefulWidget {
 
 class _NotificationGeneratorState extends State<NotificationGenerator> {
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  late NotificationDetails platformChannelSpecifics;
+  late NotificationDetails notificationDetails;
   // Variável para receber a mensagem de erro em caso de falha no uso da
   // notificação.
   var notificationsChannelInitializationError = '';
   // Variável para receber o Future retornado pela
   // função initializeNotificationsChannel
   late Future<bool> futureInitializeNotificationsChannel;
-
+  
+  @override
+  void initState() {
+    super.initState();
+    futureInitializeNotificationsChannel = initializeNotificationsChannel();
+  }
+  
   Future<bool> initializeNotificationsChannel() async {
     try {
+      // Cria o objeto que controla a notificação
       flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+      // Verifica se o usuário libera as notificações
+      bool? response = await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
 
       // Carrega dados inicialização para o Android
       const androidInitializationSettings =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
+          AndroidInitializationSettings('@drawable/ifsp_logo');
 
       // Para informar ao plugin
       // configurações de inicialiação de diferentes plataformas
@@ -39,22 +54,28 @@ class _NotificationGeneratorState extends State<NotificationGenerator> {
           InitializationSettings(android: androidInitializationSettings);
 
       // Inicialização do plugin de notificação
-      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+      await flutterLocalNotificationsPlugin.initialize(
+        initializationSettings,
+      );
 
       // Dados necessários para se criar um canal de notificações
-      // e uma plataforma específica.
+      // para uma plataforma específica.
       // No caso estamos utilizando o Android.
       const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'canal001',
-        'NOTIFICACAO_MEU_APP',
-        importance: Importance.max,
-        priority: Priority.high,
+        'ifsp01',
+        'IFSP Notificações',
+        actions: <AndroidNotificationAction>[
+          AndroidNotificationAction('id_1', 'Ação 1'),
+          AndroidNotificationAction('id_2', 'Ação 2'),
+          AndroidNotificationAction('id_3', 'Ação 3'),
+        ],
       );
 
       // Objeto que carrega os dados específico para a criação do canal
-      platformChannelSpecifics =
+      notificationDetails =
           const NotificationDetails(android: androidPlatformChannelSpecifics);
       return true;
+
     } catch (error) {
       print(error.toString());
       notificationsChannelInitializationError =
@@ -63,14 +84,9 @@ class _NotificationGeneratorState extends State<NotificationGenerator> {
     }
   }
 
-  void onErrorWhenInitializingNotificationsChannel() {
-    notificationsChannelInitializationError =
-        'Não foi possível inicializar o canal de notificações';
-  }
-
   Future<void> showNotification(
       String notificationTitle, String notificationBody) {
-    // Cada notificação pode ser um id próprio. Adicionado aqui para
+    // Cada notificação pode ter um id próprio. Adicionado aqui para
     // passar como argumento.
     const int idNotification = 0;
     print("Chamando notificação...");
@@ -78,14 +94,8 @@ class _NotificationGeneratorState extends State<NotificationGenerator> {
       idNotification,
       notificationTitle,
       notificationBody,
-      platformChannelSpecifics,
+      notificationDetails,
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    futureInitializeNotificationsChannel = initializeNotificationsChannel();
   }
 
   @override
@@ -121,7 +131,7 @@ class _NotificationGeneratorState extends State<NotificationGenerator> {
                       "Notificação 2",
                       "Outro conteúdo de notificação.",
                     ),
-                    child: const Text("Apresentar notificação 1"),
+                    child: const Text("Apresentar notificação 2"),
                   ),
                 ],
               );
